@@ -1,5 +1,3 @@
-const width = 800;
-const height = 500;
 let randomWalkers = [];
 const createWalkers = (width, height) => {
   randomWalkers.push(
@@ -44,6 +42,8 @@ const createWalkers = (width, height) => {
   );
 };
 function setup() {
+  const width = windowWidth;
+  const height = windowHeight;
   createCanvas(width, height);
   background(255);
   stroke(0);
@@ -55,5 +55,3 @@ function draw() {
   background(255);
   randomWalkers.forEach((randomWalker) => randomWalker.walk());
 }
-
-
