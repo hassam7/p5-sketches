@@ -10,8 +10,9 @@ const brightnessValues = [];
 const brightImages = new Array(256);
 function preload() {
   obama = loadImage("./obama.jpg");
-  for (let i = 0; i < 50; i++) {
-    const image = loadImage(`./images/File ${i + 1}.jpg`);
+  for (let i = 1; i < 1100; i++) {
+    console.log(`./images2/File ${i}.png`);
+    const image = loadImage(`./images2/File_${i}.png`);
     image.resize(scalingFactor, scalingFactor);
     images.push(image);
   }
@@ -80,10 +81,21 @@ function draw() {
       let imageIndex = floor(b);
       const imagePiece = brightImages[imageIndex];
       if (imagePiece) {
-        image(imagePiece, x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
+        image(
+          imagePiece,
+          x * scalingFactor,
+          y * scalingFactor,
+          scalingFactor,
+          scalingFactor
+        );
       } else {
-        fill(b)
-        rect(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
+        fill(b);
+        rect(
+          x * scalingFactor,
+          y * scalingFactor,
+          scalingFactor,
+          scalingFactor
+        );
       }
       // fill(b);
       // circle(x * scalingFactor, y * scalingFactor, scalingFactor);
