@@ -7,9 +7,10 @@ let heightScaled;
 let smaller;
 const images = [];
 const brightnessValues = [];
+const brightImages = new Array(256);
 function preload() {
   obama = loadImage("./obama.jpg");
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 50; i++) {
     const image = loadImage(`./images/File ${i + 1}.jpg`);
     image.resize(scalingFactor, scalingFactor);
     images.push(image);
@@ -18,6 +19,7 @@ function preload() {
 function loadBrightnessValues() {
   for (let i = 0; i < images.length; i++) {
     const image = images[i];
+    image.resize(scalingFactor, scalingFactor);
     let avg = 0;
     image.loadPixels();
     for (let j = 0; j < image.pixels.length; j++) {
@@ -28,8 +30,20 @@ function loadBrightnessValues() {
     avg /= image.pixels.length;
     brightnessValues[i] = avg;
   }
-  console.log(brightnessValues);
+
+  for (let i = 0; i < brightnessValues.length; i++) {
+    let record = 256;
+    for (let j = 0; j < brightnessValues.length; j++) {
+      const diff = floor(Math.abs(i - brightnessValues[j]));
+      if (diff < record) {
+        record = diff;
+        brightImages[j] = images[j];
+      }
+    }
+  }
+  console.log(brightImages, brightnessValues);
 }
+
 function setup() {
   pixelDensity(1);
   widthScaled = imgWidth / scalingFactor;
@@ -53,21 +67,27 @@ function setup() {
 }
 
 function draw() {
-  // smaller.loadPixels();
-  // noStroke();
-  // for (let x = 0; x < widthScaled; x++) {
-  //   for (let y = 0; y < heightScaled; y++) {
-  //     const index = (x + y * widthScaled) * 4;
-  //     const red = smaller.pixels[index + 0];
-  //     const green = smaller.pixels[index + 1];
-  //     const blue = smaller.pixels[index + 2];
-  //     const alpha = smaller.pixels[index + 3];
-  //     const colorAtIndex = color(red, green, blue);
-  //     const b = brightness(colorAtIndex);
-  //     fill(b);
-  //     rect(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
-  //     // circle(x * scalingFactor, y * scalingFactor, scalingFactor);
-  //   }
-  // }
+  smaller.loadPixels();
+  for (let x = 0; x < widthScaled; x++) {
+    for (let y = 0; y < heightScaled; y++) {
+      const index = (x + y * widthScaled) * 4;
+      const red = smaller.pixels[index + 0];
+      const green = smaller.pixels[index + 1];
+      const blue = smaller.pixels[index + 2];
+      const alpha = smaller.pixels[index + 3];
+      const colorAtIndex = color(red, green, blue);
+      const b = brightness(colorAtIndex);
+      let imageIndex = floor(b);
+      const imagePiece = brightImages[imageIndex];
+      if (imagePiece) {
+        image(imagePiece, x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
+      } else {
+        fill(b)
+        rect(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
+      }
+      // fill(b);
+      // circle(x * scalingFactor, y * scalingFactor, scalingFactor);
+    }
+  }
   // noLoop();
 }
