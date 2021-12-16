@@ -10,7 +10,7 @@ const brightnessValues = [];
 const brightImages = new Array(256);
 function preload() {
   obama = loadImage("./obama.jpg");
-  for (let i = 1; i < 1500; i++) {
+  for (let i = 1; i < 150; i++) {
     const image = loadImage(`./images/File_${i}.jpg`,);
     images.push(image);
   }
