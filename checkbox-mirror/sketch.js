@@ -1,8 +1,7 @@
 let slider;
 let video;
-let scalingFactor = 16;
-let cols = 40;
-let rows = 30;
+let cols = 60;
+let rows = 40;
 let boxes = [];
 function setup() {
   noCanvas();
@@ -10,7 +9,6 @@ function setup() {
   video = createCapture(VIDEO);
   video.size(cols, rows);
   slider = createSlider(0, 255, 77);
-  translate(20, 5);
   for (var y = 0; y < rows; y++) {
     for (var x = 0; x < cols; x++) {
       var box = createCheckbox();
